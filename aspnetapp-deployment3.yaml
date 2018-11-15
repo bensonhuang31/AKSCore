@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnetapp-deployment3
+  labels:
+    app: aspnetapp
+spec:
+  replicas: 5
+  template:
+    metadata:
+      name: aspnetapp
+      labels:
+        app: aspnetapp
+    spec:
+      containers:
+      - name: aspnetapp
+        image: benson1113acr11.azurecr.io/aspnetapp:v2
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: aspnetapp
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnetapp-service3
+spec:
+  selector:
+    app: aspnetapp
+  ports:
+    - port: 80
+  type: LoadBalancer
